@@ -1,0 +1,58 @@
+; What if Queen Isabella had used plaintext accounting to track 
+; expenses related to sponsoring Columbus's trip to the New World?
+
+; Note: this is *not* historically accurate!
+
+1492/01/01 Opening Balance
+    Assets:Jewelry:Mine                           87 jewels
+    Equity:Opening Balance
+
+1492/04/02 Juan de la Cosa
+    Expenses:Ship:Santa Maria                     44 jewels
+    Assets:Jewelry:Mine
+
+1492/05/12 Juan Nino of Moguer
+    Expenses:Ship:La Nina                         20 jewels
+    Assets:Jewelry:Mine
+
+1492/05/12 Cristobal Quintero
+    Expenses:Ship:La Pinta                        21 jewels
+    Assets:Jewelry:Mine
+
+
+; ================================
+; If Queen Isabella wants to acccount for her expenses, using hledger 
+; (and assuming the above is in a file named: Columbus.ledger), 
+; she could enter at the command prompt:
+
+; hledger -f Columbus.ledger register Expenses
+
+; the above would produce the output:
+
+;   1492/04/02 Juan de la Cosa                         Expenses:Ship:Santa Maria                  44 jewels     44 jewels
+;   1492/05/12 Juan Nino of Moguer                     Expenses:Ship:La Nina                      20 jewels     64 jewels
+;   1492/05/12 Cristobal Quintero                      Expenses:Ship:La Pinto                     21 jewels     85 jewels
+
+; She sees that she has spent a total of 85 jewels, and how much she
+; has spent for each of the three ships
+
+; ================================
+
+; Alternately, she can get a balance report by entering:
+
+; hledger -f Columbus.ledger balance
+
+; the above command produces:
+
+;            2 jewels  Assets:Jewelry:Mine
+;          -87 jewels  Equity:Opening Balance
+;           85 jewels  Expenses:Ship
+;           20 jewels    La Nina
+;           21 jewels    La Pinta
+;           44 jewels    Santa Maria
+;--------------------
+;                   0
+
+; from the above output, she sees that she has 2 jewels, but
+; started with 87. Additionally, she has spent a total of 85,
+; and the cost for each ship is listed. And everyting balances!
